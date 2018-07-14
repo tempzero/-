@@ -1,0 +1,45 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap-table.min.css" rel="stylesheet">
+    <title>抖音短视频去水印</title>
+
+</head>
+<body>
+
+<div class="container">
+    <div class="jumbotron">
+        <h1>抖音无水印下载</h1>
+    </div>
+    <input class="form-control" type="text" id="url" placeholder="请将APP里复制的视频链接粘贴到这里"><br>
+    <button type="submit" class="btn btn-success btn-lg btn-block" id="magic">点击解析！</button><br>
+    <div id="str"></div>
+</div>
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/layer.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#magic').click(function(){
+            layer.load(1, {shade: [0.1,'#fff']});
+            $.ajax({
+                type: "POST",
+                url: "http://douyin.qlike.cn/parse.php?app=douyin",
+                dataType: "html",
+                data:"url="+$.trim($("#url").val()),
+                success: function(data){
+                    layer.closeAll('loading');
+                    $("#str").html(data);
+                },
+                error: function(error) {
+                    layer.closeAll('loading');
+                    layer.msg('出错了，请再试一下！');
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
